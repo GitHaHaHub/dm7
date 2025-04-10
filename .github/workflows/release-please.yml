@@ -1,0 +1,21 @@
+name: release-pr
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  generate-release-pr:
+    if: startsWith(github.event.pull_request.title, 'chore(develop)') == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          release-type: simple
+          target-branch: develop
+          skip-github-release: true
